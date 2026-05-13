@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="胡昊天的传热、热管理与CFD方向求职作品集，包含个人介绍、科研成果、项目经历、在线Demo、简历下载与联系方式。"
+    />
+    <title>胡昊天 | 传热方向求职作品集</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">跳到主要内容</a>
+
+    <header class="site-header">
+      <a class="brand" href="#hero" aria-label="返回首页">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span data-profile="name">胡昊天</span>
+      </a>
+      <nav class="site-nav" aria-label="主导航">
+        <a href="#about">介绍</a>
+        <a href="#experience">经历</a>
+        <a href="#research">成果</a>
+        <a href="#skills">技能</a>
+        <a href="#projects">项目</a>
+        <a href="#demo">Demo</a>
+        <a href="#contact">联系</a>
+      </nav>
+    </header>
+
+    <main id="main">
+      <section class="hero" id="hero" aria-labelledby="hero-title">
+        <canvas id="thermal-field" aria-hidden="true"></canvas>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+          <p class="eyebrow" data-profile="status">传热 / 热管理 / CFD 方向求职中</p>
+          <h1 id="hero-title">
+            <span data-profile="name">胡昊天</span>
+            <small data-profile="headline">西安交通大学化学工程与技术硕士在读</small>
+          </h1>
+          <p class="hero-copy" data-profile="summary">
+            聚焦微重力沸腾传热、未充分发展流动换热、实验与仿真耦合验证，具备从实验平台搭建到论文产出的完整科研推进经验。
+          </p>
+          <div class="hero-stats" id="hero-stats"></div>
+          <div class="hero-actions" aria-label="主要操作">
+            <a class="button primary" data-link="resume" href="#resume">下载简历</a>
+            <a class="button secondary" data-link="github" href="#" target="_blank" rel="noreferrer">GitHub</a>
+            <a class="button ghost" data-link="demo" href="#demo">查看 Demo</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section intro-band" id="about" aria-labelledby="about-title">
+        <div class="section-inner split-layout">
+          <div>
+            <p class="section-kicker">About</p>
+            <h2 id="about-title">把复杂传热问题推进到可实验、可仿真、可发表的结果。</h2>
+          </div>
+          <div class="intro-copy">
+            <p data-profile="about">
+              我目前就读于西安交通大学化学工程与技术硕士，研究方向聚焦微重力沸腾传热与强化换热。优势在于传热理论基础、CFD/ANSYS/Fluent仿真能力、实验平台搭建与数据分析，以及面向团队协作和教学表达的沟通能力。
+            </p>
+            <dl class="profile-facts" id="profile-facts"></dl>
+          </div>
+        </div>
+      </section>
+
+      <section class="section muted" id="experience" aria-labelledby="experience-title">
+        <div class="section-inner">
+          <div class="section-heading">
+            <p class="section-kicker">Experience</p>
+            <h2 id="experience-title">教育与经历</h2>
+          </div>
+          <div class="timeline-grid" id="timeline-list"></div>
+        </div>
+      </section>
+
+      <section class="section research-section" id="research" aria-labelledby="research-title">
+        <div class="section-inner research-layout">
+          <div>
+            <p class="section-kicker">Research</p>
+            <h2 id="research-title">科研产出与当前方向</h2>
+            <p class="section-copy" data-profile="researchIntro">
+              当前重点研究未充分发展流动中流速对传热性能的影响，已获得初步结果并进入论文撰写阶段。
+            </p>
+          </div>
+          <div class="research-stack">
+            <div class="research-grid" id="research-grid"></div>
+            <div class="publication-list" id="publication-list"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section muted" id="skills" aria-labelledby="skills-title">
+        <div class="section-inner">
+          <div class="section-heading">
+            <p class="section-kicker">Skills</p>
+            <h2 id="skills-title">技能组合</h2>
+          </div>
+          <div class="skill-grid" id="skill-grid"></div>
+        </div>
+      </section>
+
+      <section class="section" id="projects" aria-labelledby="projects-title">
+        <div class="section-inner">
+          <div class="section-heading">
+            <p class="section-kicker">Projects</p>
+            <h2 id="projects-title">项目经历</h2>
+          </div>
+          <div class="project-grid" id="project-grid"></div>
+
+          <section class="space-qa" aria-labelledby="space-qa-title">
+            <div class="space-qa-copy">
+              <p class="section-kicker">Space Station Q&A</p>
+              <h3 id="space-qa-title">空间站项目问答助手</h3>
+              <p>
+                基于你提供的研制总结报告提炼公开展示版知识库，适合 HR 或面试官快速了解项目背景、验证过程和你的参与价值。
+              </p>
+            </div>
+            <div class="space-qa-panel">
+              <div class="qa-suggestions" id="qa-suggestions"></div>
+              <form class="qa-form" id="qa-form">
+                <label for="qa-question">提问</label>
+                <div class="qa-input-row">
+                  <input id="qa-question" name="question" type="search" placeholder="例如：这个模块主要做什么？" autocomplete="off" />
+                  <button class="button primary" type="submit">回答</button>
+                </div>
+              </form>
+              <div class="qa-answer" id="qa-answer" aria-live="polite">
+                <strong>请选择一个问题，或输入你想了解的项目内容。</strong>
+              </div>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <section class="section demo-section" id="demo" aria-labelledby="demo-title">
+        <div class="section-inner demo-layout">
+          <div class="demo-copy">
+            <p class="section-kicker">Online Demo</p>
+            <h2 id="demo-title">热阻网络快速估算</h2>
+            <p>
+              一个轻量在线 Demo，用于估算一维导热与对流边界组合下的总热阻、温升与热端温度。
+            </p>
+            <div class="demo-links" id="demo-links"></div>
+          </div>
+          <form class="thermal-demo" id="thermal-demo" aria-label="热阻网络估算器">
+            <div class="input-grid">
+              <label>
+                <span>热功率 Q / W</span>
+                <input name="power" type="number" min="0" step="1" value="35" />
+              </label>
+              <label>
+                <span>导热长度 L / mm</span>
+                <input name="length" type="number" min="0.01" step="0.1" value="2" />
+              </label>
+              <label>
+                <span>换热面积 A / cm²</span>
+                <input name="area" type="number" min="0.1" step="0.1" value="18" />
+              </label>
+              <label>
+                <span>导热系数 k / W·m⁻¹·K⁻¹</span>
+                <input name="conductivity" type="number" min="0.01" step="0.1" value="205" />
+              </label>
+              <label>
+                <span>对流系数 h / W·m⁻²·K⁻¹</span>
+                <input name="convection" type="number" min="0.01" step="1" value="65" />
+              </label>
+              <label>
+                <span>环境温度 / °C</span>
+                <input name="ambient" type="number" step="0.5" value="25" />
+              </label>
+            </div>
+            <div class="result-grid" aria-live="polite">
+              <output>
+                <span>导热热阻</span>
+                <strong id="r-cond">0.00 K/W</strong>
+              </output>
+              <output>
+                <span>对流热阻</span>
+                <strong id="r-conv">0.00 K/W</strong>
+              </output>
+              <output>
+                <span>热端温度</span>
+                <strong id="t-hot">0.0 °C</strong>
+              </output>
+              <output>
+                <span>热流密度</span>
+                <strong id="heat-flux">0.00 W/cm²</strong>
+              </output>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <section class="section muted" id="resume" aria-labelledby="resume-title">
+        <div class="section-inner resume-layout">
+          <div>
+            <p class="section-kicker">Resume</p>
+            <h2 id="resume-title">简历下载</h2>
+            <p id="resume-note">
+              PDF 简历已放入网站资源目录，可直接下载查看完整教育经历、项目经历、证书与联系方式。
+            </p>
+          </div>
+          <a class="button primary" data-link="resume-secondary" href="#" download>下载 PDF 简历</a>
+        </div>
+      </section>
+
+      <section class="section contact-section" id="contact" aria-labelledby="contact-title">
+        <div class="section-inner contact-layout">
+          <div>
+            <p class="section-kicker">Contact</p>
+            <h2 id="contact-title">联系方式</h2>
+            <p data-profile="contactIntro">欢迎联系我交流传热、热管理、CFD 仿真、实验平台搭建与化工工程相关岗位机会。</p>
+          </div>
+          <div class="contact-list" id="contact-list"></div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span data-profile="name">胡昊天</span>
+      <span>传热与热管理方向求职作品集</span>
+    </footer>
+
+    <script src="./data.js"></script>
+    <script src="./script.js"></script>
+  </body>
+</html>

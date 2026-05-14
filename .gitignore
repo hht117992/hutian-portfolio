@@ -1,3 +1,6 @@
 .server*.log
 .tunnel*.log
 *.zip
+generated_sites/
+__pycache__/
+*.pyc

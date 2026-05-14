@@ -1,17 +1,36 @@
-# 传热方向求职作品集网站
+# 胡昊天求职作品集与网站生成器
 
-这是为胡昊天制作的传热方向求职网站，直接打开 `index.html` 即可预览。内容集中在 `data.js`，包含个人介绍、科研成果、项目经历、在线 Demo、空间站项目问答、简历下载与联系方式。
+这个项目包含两部分：
 
-## 替换内容
+- 当前已上线的个人求职作品集网站。
+- `portfolio_generator/`：一个本地网站生成器，可以上传 PDF 简历并生成同款作品集网站。
 
-1. 在 `data.js` 中补充真实 GitHub 链接。
-2. 如果有独立在线 Demo，把链接填到 `demos` 或项目的 `links` 中。
-3. 如果简历 PDF 更新，替换 `assets/resume.pdf` 即可。
-4. 空间站项目问答内容位于 `spaceKnowledge`，可继续追加来自新项目文件的公开展示版知识点。
+## 当前网站
 
-## 文件说明
+直接打开 `index.html` 可以本地预览。网站内容主要在 `data.js` 中维护，简历 PDF 位于 `assets/resume.pdf`。
 
-- `index.html`: 页面结构。
-- `styles.css`: 视觉样式与响应式布局。
-- `data.js`: 个人信息与项目数据。
-- `script.js`: 内容渲染、热阻估算 Demo 和首屏热场动画。
+线上地址：
+
+```text
+https://hht117992.github.io/hutian-portfolio/
+```
+
+## 生成器用法
+
+双击运行：
+
+```text
+portfolio_generator\run_generator.bat
+```
+
+浏览器会打开本地页面。上传 PDF 简历、填写 GitHub 用户名和仓库名后即可生成新网站；如果勾选发布到 GitHub Pages，程序会尝试自动创建仓库、推送文件并开启 Pages。
+
+命令行方式：
+
+```powershell
+python portfolio_generator\portfolio_generator.py --resume "C:\path\resume.pdf" --github your-github-name --repo portfolio-site --deploy
+```
+
+## 注意
+
+发布到 GitHub Pages 后，网站、简历 PDF、邮箱和电话会公开，请确认可以对外展示。

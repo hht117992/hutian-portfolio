@@ -66,17 +66,20 @@ class GeneratorHandler(BaseHTTPRequestHandler):
         target_role = field_value(form, "target_role").strip() or DEFAULT_TARGET_ROLE
         city = field_value(form, "city").strip()
         salary = field_value(form, "salary").strip()
+        github_token = field_value(form, "github_token").strip()
         publish = field_value(form, "publish") == "on"
         overwrite = field_value(form, "overwrite") == "on"
         confirm_public = field_value(form, "confirm_public") == "on"
 
         if not github_username:
             raise ValueError("请填写 GitHub 用户名。")
+        if publish and not github_token:
+            raise ValueError("发布到 GitHub Pages 需要填写 GitHub Token。")
         if publish and not confirm_public:
             raise ValueError("发布到 GitHub Pages 前，请勾选公开发布确认。")
 
         resume_item = form["resume"] if "resume" in form else None
-        if not resume_item or not getattr(resume_item, "filename", ""):
+        if resume_item is None or not getattr(resume_item, "filename", ""):
             raise ValueError("请上传 PDF 简历。")
         resume_path = save_upload(resume_item, UPLOAD_DIR, "resume.pdf")
 
@@ -108,6 +111,7 @@ class GeneratorHandler(BaseHTTPRequestHandler):
                 repo_name=repo_name,
                 user_name=parsed.name,
                 user_email=parsed.email,
+                github_token=github_token,
                 overwrite_remote=overwrite,
             )
 
@@ -190,6 +194,10 @@ def render_form() -> str:
             <label>
               <span>项目文档（可选，DOCX，用于生成项目问答）</span>
               <input type="file" name="project_doc" accept=".docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document" />
+            </label>
+            <label>
+              <span>GitHub Token（仅发布时需要，不会写入生成的网站）</span>
+              <input type="password" name="github_token" placeholder="需要 repo 权限的 token" />
             </label>
             <div class="checks">
               <label><input type="checkbox" name="publish" /> 生成后发布到 GitHub Pages</label>

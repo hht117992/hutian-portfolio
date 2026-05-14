@@ -4,3 +4,7 @@
 generated_sites/
 __pycache__/
 *.pyc
+build/
+dist/
+release/
+*.spec

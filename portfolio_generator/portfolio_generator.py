@@ -8,6 +8,7 @@ import subprocess
 import sys
 import tempfile
 import time
+import base64
 import urllib.error
 import urllib.request
 import zipfile
@@ -17,7 +18,19 @@ from pathlib import Path
 from typing import Dict, Iterable, List, Optional, Tuple
 
 
-ROOT = Path(__file__).resolve().parents[1]
+def app_home() -> Path:
+    if getattr(sys, "frozen", False):
+        return Path(sys.executable).resolve().parent
+    return Path(__file__).resolve().parents[1]
+
+
+def resource_root() -> Path:
+    bundled = getattr(sys, "_MEIPASS", "")
+    return Path(bundled) if bundled else app_home()
+
+
+ROOT = app_home()
+RESOURCE_ROOT = resource_root()
 TEMPLATE_FILES = ("index.html", "styles.css", "script.js")
 DEFAULT_TARGET_ROLE = "传热 / 热管理 / CFD / 化工工程师"
 
@@ -244,7 +257,7 @@ def build_portfolio_data(
 def write_site(output_dir: Path, resume_path: Path, data: Dict[str, object]) -> None:
     output_dir.mkdir(parents=True, exist_ok=True)
     for filename in TEMPLATE_FILES:
-        source = ROOT / filename
+        source = template_path(filename)
         if not source.exists():
             raise FileNotFoundError(f"缺少模板文件：{source}")
         shutil.copy2(source, output_dir / filename)
@@ -267,19 +280,33 @@ def deploy_to_github_pages(
     repo_name: str,
     user_name: str,
     user_email: str,
+    github_token: str = "",
     overwrite_remote: bool = False,
 ) -> Tuple[str, str]:
-    token = get_github_token()
+    token = github_token.strip() or get_github_token()
     if not token:
-        run(["git", "credential-manager", "github", "login"], cwd=site_dir, check=False)
-        token = get_github_token()
-    if not token:
-        raise RuntimeError("没有拿到 GitHub 登录凭据，请先在电脑上登录 GitHub。")
+        raise RuntimeError("发布到 GitHub Pages 需要 GitHub Token。请在表单中填写 token 后重试。")
 
-    repo_url, clone_url = create_github_repo(token, repo_name, github_username)
-    prepare_git_repo(site_dir, clone_url, user_name, user_email, overwrite_remote)
-    pages_url = enable_github_pages(token, github_username, repo_name)
+    owner = get_authenticated_login(token)
+    if github_username and github_username.lower() != owner.lower():
+        raise RuntimeError(f"Token 属于 GitHub 用户 {owner}，但表单填写的是 {github_username}。请保持一致。")
+    repo_url, _clone_url = create_github_repo(token, repo_name, owner)
+    upload_site_with_github_api(token, owner, repo_name, site_dir)
+    pages_url = enable_github_pages(token, owner, repo_name)
     return repo_url, pages_url
+
+
+def template_path(filename: str) -> Path:
+    candidates = [
+        RESOURCE_ROOT / filename,
+        RESOURCE_ROOT / "templates" / filename,
+        ROOT / filename,
+        ROOT / "templates" / filename,
+    ]
+    for candidate in candidates:
+        if candidate.exists():
+            return candidate
+    return candidates[0]
 
 
 def get_github_token() -> str:
@@ -324,7 +351,7 @@ def create_github_repo(token: str, repo_name: str, owner: str) -> Tuple[str, str
         "name": repo_name,
         "description": "Personal portfolio generated from resume",
         "private": False,
-        "auto_init": False,
+        "auto_init": True,
         "has_issues": False,
         "has_projects": False,
         "has_wiki": False,
@@ -336,6 +363,44 @@ def create_github_repo(token: str, repo_name: str, owner: str) -> Tuple[str, str
         data=body,
     )
     return created["html_url"], created["clone_url"]
+
+
+def get_authenticated_login(token: str) -> str:
+    user = request_json("https://api.github.com/user", headers=github_headers(token), method="GET")
+    login = str(user.get("login", "")).strip()
+    if not login:
+        raise RuntimeError("无法识别 GitHub Token 对应的账号。")
+    return login
+
+
+def upload_site_with_github_api(token: str, owner: str, repo_name: str, site_dir: Path) -> None:
+    headers = github_headers(token)
+    files = [
+        path
+        for path in site_dir.rglob("*")
+        if path.is_file() and ".git" not in path.parts
+    ]
+    for path in files:
+        rel = path.relative_to(site_dir).as_posix()
+        existing = request_json(
+            f"https://api.github.com/repos/{owner}/{repo_name}/contents/{rel}",
+            headers=headers,
+            method="GET",
+            allow_404=True,
+        )
+        body: Dict[str, object] = {
+            "message": f"Upload {rel}",
+            "content": base64.b64encode(path.read_bytes()).decode("ascii"),
+            "branch": "main",
+        }
+        if existing.get("sha"):
+            body["sha"] = existing["sha"]
+        request_json(
+            f"https://api.github.com/repos/{owner}/{repo_name}/contents/{rel}",
+            headers=headers,
+            method="PUT",
+            data=body,
+        )
 
 
 def enable_github_pages(token: str, owner: str, repo_name: str) -> str:
@@ -899,6 +964,7 @@ def main(argv: Optional[List[str]] = None) -> int:
     parser.add_argument("--salary", default="", help="期望薪资")
     parser.add_argument("--project-doc", default="", help="可选项目 DOCX 文档")
     parser.add_argument("--deploy", action="store_true", help="生成后部署到 GitHub Pages")
+    parser.add_argument("--github-token", default="", help="发布到 GitHub Pages 所需的 GitHub Token")
     parser.add_argument("--force", action="store_true", help="部署时覆盖远程 main 分支")
     args = parser.parse_args(argv)
 
@@ -925,6 +991,7 @@ def main(argv: Optional[List[str]] = None) -> int:
             repo_name=args.repo,
             user_name=parse_resume(extract_pdf_text(Path(args.resume)), Path(args.resume).stem).name,
             user_email=parse_resume(extract_pdf_text(Path(args.resume)), Path(args.resume).stem).email,
+            github_token=args.github_token,
             overwrite_remote=args.force,
         )
         print(f"GitHub 仓库：{repo_url}")

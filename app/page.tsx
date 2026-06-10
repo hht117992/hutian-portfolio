@@ -7,6 +7,7 @@ import Contact from "../components/Contact";
 import Education from "../components/Education";
 import Experience from "../components/Experience";
 import Footer from "../components/Footer";
+import HeatTransferCalculator from "../components/HeatTransferCalculator";
 import Hero from "../components/Hero";
 import Navbar from "../components/Navbar";
 import ResearchProjects from "../components/ResearchProjects";
@@ -26,6 +27,8 @@ export default function HomePage() {
           <AnimatedDivider label="Research Focus" />
           <ResearchProjects />
           <CFDMeshDemo />
+          <AnimatedDivider label="Heat Transfer Data" />
+          <HeatTransferCalculator />
           <AnimatedDivider label="Engineering Practice" />
           <Experience />
           <Skills />

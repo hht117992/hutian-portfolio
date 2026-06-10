@@ -1,3 +1,4 @@
+import BoilingSystemDiagram from "./BoilingSystemDiagram";
 import ResearchConsole from "./ResearchConsole";
 import Reveal from "./Reveal";
 import SectionHeader from "./SectionHeader";
@@ -23,6 +24,10 @@ export default function ResearchProjects() {
                 </span>
               </div>
               <h3 className="gradient-text">{project.name}</h3>
+              <div className="project-overview">
+                <span>项目定位</span>
+                <p>{project.overview}</p>
+              </div>
               <div className="tag-list">
                 {project.tags.map((tag) => (
                   <span className="tag shine-hover" key={tag}>
@@ -37,6 +42,7 @@ export default function ResearchProjects() {
               </ul>
             </div>
             <div className="research-side">
+              <BoilingSystemDiagram />
               <ResearchConsole variant="project" />
             </div>
           </article>

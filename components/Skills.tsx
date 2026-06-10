@@ -3,13 +3,14 @@ import type { LucideIcon } from "lucide-react";
 
 import Reveal from "./Reveal";
 import SectionHeader from "./SectionHeader";
+import SkillEnergyBar from "./SkillEnergyBar";
 import { resumeData } from "../lib/resumeData";
 
 const iconMap: Record<string, LucideIcon> = {
   编程与数据处理: TerminalSquare,
   仿真分析: ChartNoAxesCombined,
   工程设计: PenTool,
-  科研能力: FlaskConical,
+  科研实验: FlaskConical,
 };
 
 export default function Skills() {
@@ -24,17 +25,19 @@ export default function Skills() {
       <div className="card-grid">
         {resumeData.skills.map((group, index) => {
           const Icon = iconMap[group.category] ?? TerminalSquare;
-          const isSimulation = group.category.includes("仿真");
+          const isHighlighted = group.category.includes("仿真") || group.category.includes("科研");
 
           return (
             <Reveal key={group.category} delay={index * 0.04}>
-              <article className={`skill-card glass-card ${isSimulation ? "is-highlighted" : ""}`}>
+              <article className={`skill-card glass-card ${isHighlighted ? "is-highlighted" : ""}`}>
                 <div className="skill-card-head">
                   <span className="card-icon" aria-hidden="true">
                     <Icon size={18} />
                   </span>
                   <h3>{group.category}</h3>
                 </div>
+                <SkillEnergyBar energy={group.energy} />
+                <p className="skill-fit">{group.fit}</p>
                 <div className="tag-list">
                   {group.items.map((item) => (
                     <span className="tag shine-hover" key={item}>

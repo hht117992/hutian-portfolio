@@ -1,5 +1,6 @@
 import About from "../components/About";
 import AnimatedBackground from "../components/AnimatedBackground";
+import AnimatedDivider from "../components/AnimatedDivider";
 import Certifications from "../components/Certifications";
 import Contact from "../components/Contact";
 import Education from "../components/Education";
@@ -17,12 +18,16 @@ export default function HomePage() {
       <Navbar />
       <main>
         <Hero />
+        <AnimatedDivider label="Flow / Heat Transfer" />
         <div className="page-shell">
           <About />
           <Education />
+          <AnimatedDivider label="Research Focus" />
           <ResearchProjects />
+          <AnimatedDivider label="Engineering Practice" />
           <Experience />
           <Skills />
+          <AnimatedDivider label="Contact" />
           <Certifications />
           <Contact />
         </div>

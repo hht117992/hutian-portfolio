@@ -1,6 +1,7 @@
 import About from "../components/About";
 import AnimatedBackground from "../components/AnimatedBackground";
 import AnimatedDivider from "../components/AnimatedDivider";
+import CFDMeshDemo from "../components/CFDMeshDemo";
 import Certifications from "../components/Certifications";
 import Contact from "../components/Contact";
 import Education from "../components/Education";
@@ -24,6 +25,7 @@ export default function HomePage() {
           <Education />
           <AnimatedDivider label="Research Focus" />
           <ResearchProjects />
+          <CFDMeshDemo />
           <AnimatedDivider label="Engineering Practice" />
           <Experience />
           <Skills />

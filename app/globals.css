@@ -1907,3 +1907,387 @@ main,
     gap: 4px;
   }
 }
+
+.cfd-demo-section {
+  padding-top: 86px;
+}
+
+.cfd-demo-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(330px, 0.65fr);
+  gap: 18px;
+  padding: clamp(18px, 3vw, 26px);
+  border-color: rgba(56, 189, 248, 0.34);
+  background:
+    linear-gradient(135deg, rgba(56, 189, 248, 0.08), transparent 34%),
+    linear-gradient(315deg, rgba(45, 212, 191, 0.08), transparent 40%),
+    rgba(15, 23, 42, 0.7);
+}
+
+.cfd-visual-panel,
+.cfd-readout,
+.cfd-controls {
+  min-width: 0;
+  border: 1px solid rgba(148, 163, 184, 0.16);
+  border-radius: var(--radius);
+  background: rgba(2, 6, 23, 0.34);
+}
+
+.cfd-visual-panel {
+  position: relative;
+  overflow: hidden;
+}
+
+.cfd-visual-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.32;
+  background-image:
+    linear-gradient(rgba(56, 189, 248, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(56, 189, 248, 0.08) 1px, transparent 1px);
+  background-size: 38px 38px;
+  pointer-events: none;
+}
+
+.cfd-side-panel {
+  display: grid;
+  gap: 14px;
+  min-width: 0;
+}
+
+.cfd-panel-topline {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.14);
+  padding: 13px 14px;
+}
+
+.cfd-panel-topline span {
+  color: var(--cyan);
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.cfd-panel-topline strong {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.cfd-mesh-svg {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  min-height: 360px;
+  padding: 10px;
+}
+
+.cfd-backdrop-grid line {
+  stroke: rgba(56, 189, 248, 0.09);
+  stroke-width: 1;
+}
+
+.cfd-channel-outline {
+  fill: rgba(15, 23, 42, 0.68);
+  stroke: rgba(56, 189, 248, 0.52);
+  stroke-width: 2;
+  filter: drop-shadow(0 0 18px rgba(56, 189, 248, 0.18));
+}
+
+.cfd-mesh-lines line {
+  stroke: rgba(56, 189, 248, 0.25);
+  stroke-width: 1;
+}
+
+.cfd-refinement-zone {
+  fill: rgba(45, 212, 191, 0.13);
+  stroke: rgba(45, 212, 191, 0.65);
+  stroke-dasharray: 8 8;
+  filter: drop-shadow(0 0 16px rgba(45, 212, 191, 0.24));
+  animation: cfdRefineGlow 3.2s ease-in-out infinite;
+}
+
+.cfd-refinement-lines line {
+  stroke: rgba(45, 212, 191, 0.42);
+  stroke-width: 1;
+}
+
+.cfd-boundary-layer line {
+  stroke: rgba(245, 158, 11, 0.72);
+  stroke-linecap: round;
+  stroke-width: 1.5;
+}
+
+.cfd-inlet-arrow,
+.cfd-outlet-arrow,
+.cfd-flow-arrows path {
+  fill: none;
+  stroke: var(--cyan);
+  stroke-linecap: round;
+  stroke-width: 3;
+  filter: drop-shadow(0 0 10px rgba(56, 189, 248, 0.28));
+}
+
+.cfd-flow-arrows path {
+  stroke-dasharray: 12 14;
+  animation: cfdFlowMove var(--flow-duration, 3s) linear infinite;
+}
+
+.cfd-heated-wall {
+  fill: rgba(245, 158, 11, 0.13);
+  stroke: rgba(245, 158, 11, 0.62);
+  stroke-width: 1.6;
+  transition: opacity 160ms ease, stroke 160ms ease;
+}
+
+.heated-disabled .cfd-heated-wall,
+.heated-disabled .cfd-heat-flux,
+.heated-disabled .warm {
+  opacity: 0.26;
+}
+
+.cfd-heat-flux line {
+  stroke: #f59e0b;
+  stroke-linecap: round;
+  stroke-width: 2.4;
+  filter: drop-shadow(0 0 12px rgba(245, 158, 11, 0.28));
+  animation: cfdHeatPulse 2.4s ease-in-out infinite;
+}
+
+.cfd-svg-label {
+  fill: var(--muted);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.cfd-svg-label.cyan {
+  fill: var(--cyan);
+}
+
+.cfd-svg-label.warm {
+  fill: #fbbf24;
+}
+
+.cfd-svg-label.muted {
+  fill: rgba(148, 163, 184, 0.7);
+}
+
+.cfd-readout,
+.cfd-controls {
+  padding: 16px;
+}
+
+.cfd-readout .cfd-panel-topline {
+  margin: -16px -16px 14px;
+}
+
+.cfd-readout-grid {
+  display: grid;
+  gap: 9px;
+  margin: 0;
+}
+
+.cfd-readout-grid div {
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+  gap: 10px;
+  align-items: center;
+  border: 1px solid rgba(148, 163, 184, 0.12);
+  border-radius: 7px;
+  padding: 9px 10px;
+  background: rgba(15, 23, 42, 0.48);
+}
+
+.cfd-readout-grid dt {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.cfd-readout-grid dd {
+  margin: 0;
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 800;
+  overflow-wrap: anywhere;
+}
+
+.cfd-note {
+  margin: 14px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.cfd-controls {
+  display: grid;
+  gap: 16px;
+}
+
+.cfd-control {
+  display: grid;
+  gap: 9px;
+  color: var(--text);
+}
+
+.cfd-control span,
+.cfd-toggle span {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.cfd-control strong,
+.cfd-toggle strong {
+  color: var(--cyan);
+  font-size: 13px;
+}
+
+.cfd-control input[type="range"] {
+  width: 100%;
+  height: 6px;
+  margin: 0;
+  accent-color: var(--teal);
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(56, 189, 248, 0.82), rgba(45, 212, 191, 0.9));
+  cursor: pointer;
+}
+
+.cfd-toggle {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 54px;
+  gap: 12px;
+  align-items: center;
+  cursor: pointer;
+}
+
+.cfd-toggle input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.cfd-toggle i {
+  position: relative;
+  display: block;
+  width: 54px;
+  height: 30px;
+  border: 1px solid rgba(148, 163, 184, 0.28);
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.78);
+  transition: border-color 160ms ease, background 160ms ease, box-shadow 160ms ease;
+}
+
+.cfd-toggle i::after {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 4px;
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  background: var(--muted);
+  transition: transform 160ms ease, background 160ms ease;
+}
+
+.cfd-toggle input:checked + i {
+  border-color: rgba(45, 212, 191, 0.68);
+  background: rgba(45, 212, 191, 0.14);
+  box-shadow: 0 0 18px rgba(45, 212, 191, 0.18);
+}
+
+.cfd-toggle input:checked + i::after {
+  transform: translateX(24px);
+  background: var(--teal);
+}
+
+@keyframes cfdFlowMove {
+  to {
+    stroke-dashoffset: -52;
+  }
+}
+
+@keyframes cfdHeatPulse {
+  0%,
+  100% {
+    opacity: 0.45;
+    transform: translateY(0);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes cfdRefineGlow {
+  0%,
+  100% {
+    opacity: 0.62;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 1020px) {
+  .cfd-demo-card {
+    grid-template-columns: 1fr;
+  }
+
+  .cfd-side-panel {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 760px) {
+  .cfd-demo-section {
+    padding-top: 64px;
+  }
+
+  .cfd-demo-card {
+    padding: 16px;
+  }
+
+  .cfd-side-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .cfd-mesh-svg {
+    min-height: auto;
+    padding: 6px;
+  }
+
+  .cfd-panel-topline,
+  .cfd-control span,
+  .cfd-toggle span,
+  .cfd-readout-grid div {
+    grid-template-columns: 1fr;
+  }
+
+  .cfd-readout-grid div {
+    gap: 2px;
+  }
+
+  .cfd-svg-label {
+    font-size: 15px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cfd-flow-arrows path,
+  .cfd-heat-flux line,
+  .cfd-refinement-zone {
+    animation: none !important;
+  }
+}

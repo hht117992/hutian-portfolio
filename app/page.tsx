@@ -5,6 +5,7 @@ import CFDMeshDemo from "../components/CFDMeshDemo";
 import Certifications from "../components/Certifications";
 import Contact from "../components/Contact";
 import Education from "../components/Education";
+import ExperimentalSystemDemo from "../components/ExperimentalSystemDemo";
 import Experience from "../components/Experience";
 import Footer from "../components/Footer";
 import HeatTransferCalculator from "../components/HeatTransferCalculator";
@@ -29,6 +30,8 @@ export default function HomePage() {
           <CFDMeshDemo />
           <AnimatedDivider label="Heat Transfer Data" />
           <HeatTransferCalculator />
+          <AnimatedDivider label="Experimental Loop" />
+          <ExperimentalSystemDemo />
           <AnimatedDivider label="Engineering Practice" />
           <Experience />
           <Skills />
